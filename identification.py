@@ -70,7 +70,7 @@ sql_all = 'SELECT fingerprint FROM fingerprint_fingerprint'
 
 #フィンガープリントの用意
 database_fingerprint = database(sql_all)
-login_fingerptint = dataFormatting(json.loads((database_fingerprint[3])[0]))
+login_fingerptint = dataFormatting(json.loads((database_fingerprint["""ここに評価したい端末のid-1(インデックス番号)の数字を入れる"""])[0]))
 distance_list = []
 
 #評価するところ
