@@ -70,7 +70,7 @@ sql_all = 'SELECT fingerprint FROM fingerprint_fingerprint'
 
 #フィンガープリントの用意
 database_fingerprint = database(sql_all)
-login_fingerptint = dataFormatting(json.loads((database_fingerprint[1])[0]))
+login_fingerptint = dataFormatting(json.loads((database_fingerprint[3])[0]))
 distance_list = []
 
 #評価するところ
@@ -79,10 +79,11 @@ for i in database_fingerprint:
     json_dict = json.loads(data)
     fingerprint = dataFormatting(json_dict)
     distance = Levenshtein.ratio(fingerprint, login_fingerptint)
-    distance_list.append(distance)
+    if distance >= 0.95:
+        distance_list.append(distance)
 
-index = distance_list.index(max(distance_list))
-print(index)
+len = len(distance_list)
+print(len)
 print(distance_list)
 #print(distance_list[index])
 
