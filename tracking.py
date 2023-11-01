@@ -32,36 +32,36 @@ def dataFormatting(dict):
     httpReferer = httpheader['httpReferer']
     isp = httpheader['isp']
 
-    userAgent = browserinformation['userAgent']
-    languages = browserinformation['languages']
-    hardwareConcurrency = browserinformation['hardwareConcurrency']
-    appVersion = browserinformation['appVersion']
-    deviceMemory = browserinformation['deviceMemory']
-    doNotTrack = browserinformation['doNotTrack']
-    maxTouchPoints = browserinformation['maxTouchPoints']
-    product = browserinformation['product']
-    productSub = browserinformation['productSub']
-    vendor = browserinformation['vendor']
-    vendorSub = browserinformation['vendorSub']
-    oscpu = browserinformation['oscpu']
-    platform = browserinformation['platform']
-    colorDepth = browserinformation['colorDepth']
-    devicePixelRatio = browserinformation['devicePixelRatio']
-    screenResolution = browserinformation['screenResolution']
-    availScreenResolution = browserinformation['availScreenResolution']
-    windowResolution = browserinformation['windowResolution']
-    windowPosition = browserinformation['windowPosition']
+    userAgent = str(browserinformation['userAgent'])
+    languages = str(browserinformation['languages'])
+    hardwareConcurrency = str(browserinformation['hardwareConcurrency'])
+    appVersion = str(browserinformation['appVersion'])
+    deviceMemory = str(browserinformation['deviceMemory'])
+    doNotTrack = str(browserinformation['doNotTrack'])
+    maxTouchPoints = str(browserinformation['maxTouchPoints'])
+    product = str(browserinformation['product'])
+    productSub = str(browserinformation['productSub'])
+    vendor = str(browserinformation['vendor'])
+    vendorSub = str(browserinformation['vendorSub'])
+    oscpu = str(browserinformation['oscpu'])
+    platform = str(browserinformation['platform'])
+    colorDepth = str(browserinformation['colorDepth'])
+    devicePixelRatio = str(browserinformation['devicePixelRatio'])
+    screenResolution = str(browserinformation['screenResolution'])
+    availScreenResolution = str(browserinformation['availScreenResolution'])
+    windowResolution = str(browserinformation['windowResolution'])
+    windowPosition = str(browserinformation['windowPosition'])
     cookieEnabled = str(browserinformation['cookieEnabled'])
     touchEnabled = str(browserinformation['touchEnabled'])
     pdfViewerEnabled = str(browserinformation['pdfViewerEnabled'])
-    gpuVendor = browserinformation['gpuVendor']
-    gpuRenderer = browserinformation['gpuRenderer']
-    webgl = browserinformation['webgl']
-    referrer = browserinformation['referrer']
-    timezoneOffset = browserinformation['timezoneOffset']
-    networkInformation = browserinformation['networkInformation']
+    gpuVendor = str(browserinformation['gpuVendor'])
+    gpuRenderer = str(browserinformation['gpuRenderer'])
+    webgl = str(browserinformation['webgl'])
+    referrer = str(browserinformation['referrer'])
+    timezoneOffset = str(browserinformation['timezoneOffset'])
+    networkInformation = str(browserinformation['networkInformation'])
 
-    fingerprint = httpUserAgent
+    fingerprint = httpUserAgent + httpRemoteAddr + httpAcceptLanguage + userAgent + languages + appVersion + oscpu + platform + colorDepth + availScreenResolution + screenResolution + cookieEnabled + touchEnabled + pdfViewerEnabled + timezoneOffset
     #print(fingerprint)
     return fingerprint
 
@@ -81,8 +81,10 @@ for i in database_fingerprint:
     distance = Levenshtein.ratio(fingerprint, login_fingerptint)
     distance_list.append(distance)
 
-print(distance_list.index(max(distance_list)))
-    
+index = distance_list.index(max(distance_list))
+print(index)
+print(distance_list)
+#print(distance_list[index])
 
 #データベース接続終わり
 cur.close()

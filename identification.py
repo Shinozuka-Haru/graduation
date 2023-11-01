@@ -32,36 +32,36 @@ def dataFormatting(dict):
     httpReferer = httpheader['httpReferer']
     isp = httpheader['isp']
 
-    userAgent = browserinformation['userAgent']
-    languages = browserinformation['languages']
-    hardwareConcurrency = browserinformation['hardwareConcurrency']
-    appVersion = browserinformation['appVersion']
-    deviceMemory = browserinformation['deviceMemory']
-    doNotTrack = browserinformation['doNotTrack']
-    maxTouchPoints = browserinformation['maxTouchPoints']
-    product = browserinformation['product']
-    productSub = browserinformation['productSub']
-    vendor = browserinformation['vendor']
-    vendorSub = browserinformation['vendorSub']
-    oscpu = browserinformation['oscpu']
-    platform = browserinformation['platform']
-    colorDepth = browserinformation['colorDepth']
-    devicePixelRatio = browserinformation['devicePixelRatio']
-    screenResolution = browserinformation['screenResolution']
-    availScreenResolution = browserinformation['availScreenResolution']
-    windowResolution = browserinformation['windowResolution']
-    windowPosition = browserinformation['windowPosition']
+    userAgent = str(browserinformation['userAgent'])
+    languages = str(browserinformation['languages'])
+    hardwareConcurrency = str(browserinformation['hardwareConcurrency'])
+    appVersion = str(browserinformation['appVersion'])
+    deviceMemory = str(browserinformation['deviceMemory'])
+    doNotTrack = str(browserinformation['doNotTrack'])
+    maxTouchPoints = str(browserinformation['maxTouchPoints'])
+    product = str(browserinformation['product'])
+    productSub = str(browserinformation['productSub'])
+    vendor = str(browserinformation['vendor'])
+    vendorSub = str(browserinformation['vendorSub'])
+    oscpu = str(browserinformation['oscpu'])
+    platform = str(browserinformation['platform'])
+    colorDepth = str(browserinformation['colorDepth'])
+    devicePixelRatio = str(browserinformation['devicePixelRatio'])
+    screenResolution = str(browserinformation['screenResolution'])
+    availScreenResolution = str(browserinformation['availScreenResolution'])
+    windowResolution = str(browserinformation['windowResolution'])
+    windowPosition = str(browserinformation['windowPosition'])
     cookieEnabled = str(browserinformation['cookieEnabled'])
     touchEnabled = str(browserinformation['touchEnabled'])
     pdfViewerEnabled = str(browserinformation['pdfViewerEnabled'])
-    gpuVendor = browserinformation['gpuVendor']
-    gpuRenderer = browserinformation['gpuRenderer']
-    webgl = browserinformation['webgl']
-    referrer = browserinformation['referrer']
-    timezoneOffset = browserinformation['timezoneOffset']
-    networkInformation = browserinformation['networkInformation']
+    gpuVendor = str(browserinformation['gpuVendor'])
+    gpuRenderer = str(browserinformation['gpuRenderer'])
+    webgl = str(browserinformation['webgl'])
+    referrer = str(browserinformation['referrer'])
+    timezoneOffset = str(browserinformation['timezoneOffset'])
+    networkInformation = str(browserinformation['networkInformation'])
 
-    fingerprint = httpUserAgent + httpRemoteAddr
+    fingerprint = httpUserAgent + httpRemoteAddr + httpAcceptLanguage + userAgent + languages + appVersion + oscpu + platform + colorDepth + availScreenResolution + screenResolution + cookieEnabled + touchEnabled + pdfViewerEnabled + timezoneOffset
     #print(fingerprint)
     return fingerprint
 
@@ -70,7 +70,7 @@ sql_all = 'SELECT fingerprint FROM fingerprint_fingerprint'
 
 #フィンガープリントの用意
 database_fingerprint = database(sql_all)
-login_fingerptint = dataFormatting(json.loads((database_fingerprint["""ここに評価したい端末のid-1(インデックス番号)の数字を入れる"""])[0]))
+login_fingerptint = dataFormatting(json.loads((database_fingerprint[1])[0]))
 distance_list = []
 
 #評価するところ
