@@ -14,56 +14,58 @@ def database(sql):
 
 #フィンガープリントから必要な特徴点取り出す関数
 def dataFormatting(dict):
+    fingerprint_list = []
+
     httpheader = dict['httpHeader']
     browserinformation = dict['browserInformation']
 
-    httpUserAgent = httpheader['httpUserAgent']
-    httpRemoteAddr = httpheader['httpRemoteAddr']
-    httpRomoteHost = httpheader['httpRemoteHost']
-    httpAccept = httpheader['httpAccept']
-    httpAcceptLanguage = httpheader['httpAcceptLanguage']
-    httpAcceptEncoding = httpheader['httpAcceptEncoding']
-    httpContentLength = httpheader['httpContentLength']
-    httpContentType = httpheader['httpContentType']
-    httpConnection = httpheader['httpConnection']
-    httpCacheControl = httpheader['httpCacheControl']
-    httpUpgradeInsecureRequests = ['httpUpgradeInsecureRequests']
-    httpQueryString = ['httpQueryString']
-    httpReferer = httpheader['httpReferer']
-    isp = httpheader['isp']
+    httpUserAgent = fingerprint_list.append(httpheader['httpUserAgent'])
+    httpRemoteAddr = fingerprint_list.append(httpheader['httpRemoteAddr'])
+    httpRomoteHost = fingerprint_list.append(httpheader['httpRemoteHost'])
+    httpAccept = fingerprint_list.append(httpheader['httpAccept'])
+    httpAcceptLanguage = fingerprint_list.append(httpheader['httpAcceptLanguage'])
+    httpAcceptEncoding = fingerprint_list.append(httpheader['httpAcceptEncoding'])
+    httpContentLength = fingerprint_list.append(httpheader['httpContentLength'])
+    httpContentType = fingerprint_list.append(httpheader['httpContentType'])
+    httpConnection = fingerprint_list.append(httpheader['httpConnection'])
+    httpCacheControl = fingerprint_list.append(httpheader['httpCacheControl'])
+    httpUpgradeInsecureRequests = fingerprint_list.append(httpheader['httpUpgradeInsecureRequests'])
+    httpQueryString = fingerprint_list.append(httpheader['httpQueryString'])
+    httpReferer = fingerprint_list.append(httpheader['httpReferer'])
+    isp = fingerprint_list.append(str(httpheader['isp']))
 
-    userAgent = str(browserinformation['userAgent'])
-    languages = str(browserinformation['languages'])
-    hardwareConcurrency = str(browserinformation['hardwareConcurrency'])
-    appVersion = str(browserinformation['appVersion'])
-    deviceMemory = str(browserinformation['deviceMemory'])
-    doNotTrack = str(browserinformation['doNotTrack'])
-    maxTouchPoints = str(browserinformation['maxTouchPoints'])
-    product = str(browserinformation['product'])
-    productSub = str(browserinformation['productSub'])
-    vendor = str(browserinformation['vendor'])
-    vendorSub = str(browserinformation['vendorSub'])
-    oscpu = str(browserinformation['oscpu'])
-    platform = str(browserinformation['platform'])
-    colorDepth = str(browserinformation['colorDepth'])
-    devicePixelRatio = str(browserinformation['devicePixelRatio'])
-    screenResolution = str(browserinformation['screenResolution'])
-    availScreenResolution = str(browserinformation['availScreenResolution'])
-    windowResolution = str(browserinformation['windowResolution'])
-    windowPosition = str(browserinformation['windowPosition'])
-    cookieEnabled = str(browserinformation['cookieEnabled'])
-    touchEnabled = str(browserinformation['touchEnabled'])
-    pdfViewerEnabled = str(browserinformation['pdfViewerEnabled'])
-    gpuVendor = str(browserinformation['gpuVendor'])
-    gpuRenderer = str(browserinformation['gpuRenderer'])
-    webgl = str(browserinformation['webgl'])
-    referrer = str(browserinformation['referrer'])
-    timezoneOffset = str(browserinformation['timezoneOffset'])
-    networkInformation = str(browserinformation['networkInformation'])
+    userAgent = fingerprint_list.append(str(browserinformation['userAgent']))
+    languages = fingerprint_list.append(str(browserinformation['languages']))
+    hardwareConcurrency = fingerprint_list.append(str(browserinformation['hardwareConcurrency']))
+    appVersion = fingerprint_list.append(str(browserinformation['appVersion']))
+    deviceMemory = fingerprint_list.append(str(browserinformation['deviceMemory']))
+    doNotTrack = fingerprint_list.append(str(browserinformation['doNotTrack']))
+    maxTouchPoints = fingerprint_list.append(str(browserinformation['maxTouchPoints']))
+    product = fingerprint_list.append(str(browserinformation['product']))
+    productSub = fingerprint_list.append(str(browserinformation['productSub']))
+    vendor = fingerprint_list.append(str(browserinformation['vendor']))
+    vendorSub = fingerprint_list.append(str(browserinformation['vendorSub']))
+    oscpu = fingerprint_list.append(str(browserinformation['oscpu']))
+    platform = fingerprint_list.append(str(browserinformation['platform']))
+    colorDepth = fingerprint_list.append(str(browserinformation['colorDepth']))
+    devicePixelRatio = fingerprint_list.append(str(browserinformation['devicePixelRatio']))
+    screenResolution = fingerprint_list.append(str(browserinformation['screenResolution']))
+    availScreenResolution = fingerprint_list.append(str(browserinformation['availScreenResolution']))
+    windowResolution = fingerprint_list.append(str(browserinformation['windowResolution']))
+    windowPosition = fingerprint_list.append(str(browserinformation['windowPosition']))
+    cookieEnabled = fingerprint_list.append(str(browserinformation['cookieEnabled']))
+    touchEnabled = fingerprint_list.append(str(browserinformation['touchEnabled']))
+    pdfViewerEnabled = fingerprint_list.append(str(browserinformation['pdfViewerEnabled']))
+    gpuVendor = fingerprint_list.append(str(browserinformation['gpuVendor']))
+    gpuRenderer = fingerprint_list.append(str(browserinformation['gpuRenderer']))
+    webgl = fingerprint_list.append(str(browserinformation['webgl']))
+    referrer = fingerprint_list.append(str(browserinformation['referrer']))
+    timezoneOffset = fingerprint_list.append(str(browserinformation['timezoneOffset']))
+    networkInformation = fingerprint_list.append(str(browserinformation['networkInformation']))
 
-    fingerprint = httpUserAgent + httpRemoteAddr + httpAcceptLanguage + userAgent + languages + appVersion + oscpu + platform + colorDepth + availScreenResolution + screenResolution + cookieEnabled + touchEnabled + pdfViewerEnabled + timezoneOffset
-    #print(fingerprint)
-    return fingerprint
+    #fingerprint = httpUserAgent + httpRemoteAddr + httpAcceptLanguage + userAgent + languages + appVersion + oscpu + platform + colorDepth + availScreenResolution + screenResolution + cookieEnabled + touchEnabled + pdfViewerEnabled + timezoneOffset
+    #print(fingerprint_list)
+    return fingerprint_list
 
 #sql文
 sql_all = 'SELECT tracking FROM fingerprint_tracking'
@@ -75,16 +77,18 @@ distance_list = []
 
 #評価するところ
 for i in database_fingerprint:
+    distance = 0
     data = i[0]
     json_dict = json.loads(data)
     fingerprint = dataFormatting(json_dict)
-    distance = Levenshtein.ratio(fingerprint, login_fingerptint)
+    for j,k in zip(fingerprint, login_fingerptint):
+        distance = Levenshtein.ratio(j, k) + distance
+    distance = distance / len(login_fingerptint)
     distance_list.append(distance)
 
 index = distance_list.index(max(distance_list))
 print(index)
 print(distance_list)
-#print(distance_list[index])
 
 #データベース接続終わり
 cur.close()
