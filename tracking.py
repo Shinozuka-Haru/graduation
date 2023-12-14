@@ -72,23 +72,36 @@ sql_all = 'SELECT tracking FROM fingerprint_tracking'
 
 #フィンガープリントの用意
 database_fingerprint = database(sql_all)
-login_fingerptint = dataFormatting(json.loads((database_fingerprint["""ここに比較したいフィンガ―プリントのid-1(インデックス番号)の数字を入れる"""])[0]))
+login_fingerptint = dataFormatting(json.loads((database_fingerprint[134 - 1])[0]))
 distance_list = []
-
+index_list = []
+a = 0
+b = 0
 #評価するところ
 for i in database_fingerprint:
     distance = 0
     data = i[0]
     json_dict = json.loads(data)
     fingerprint = dataFormatting(json_dict)
+    a += 1
+    if a == 134:#ここの数字は評価したい端末のid番号
+        distance_list.append(0)
+        continue
     for j,k in zip(fingerprint, login_fingerptint):
         distance = Levenshtein.ratio(j, k) + distance
     distance = distance / len(login_fingerptint)
     distance_list.append(distance)
 
-index = distance_list.index(max(distance_list))
-print(index)
-print(distance_list)
+#index = distance_list.index(max(distance_list))
+max = max(distance_list)
+b = 0
+for i in distance_list:
+    b += 1
+    if i == max:
+        index_list.append(b)
+print("最大値のid番号: " + str(index_list))
+print("最大値 : " + str(max))
+#print(distance_list)
 
 #データベース接続終わり
 cur.close()

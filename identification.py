@@ -88,9 +88,11 @@ for i in database_fingerprint:
     if distance >= 0.95:
         distance_list.append(distance)
 
-len = len(distance_list)
-print(len)
-print(distance_list)
+# len = len(distance_list)
+# per = (len / 78) * 100
+# print(per)
+# print(len)
+# print(distance_list)
 
 #データベース接続終わり
 cur.close()
